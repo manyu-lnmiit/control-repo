@@ -1,0 +1,6 @@
+jsonschema>=4.21,<5
+PyYAML>=6.0,<7
+click>=8.1,<9
+fastapi>=0.110,<1
+uvicorn[standard]>=0.29,<1
+pydantic>=2.6,<3
