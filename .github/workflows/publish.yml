@@ -1,0 +1,92 @@
+name: Publish daily project(s) to new repos
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'pending/**'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-pending
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.REPO_CREATE_TOKEN }}
+      OWNER: manyu-lnmiit
+    steps:
+      - name: Checkout control repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.REPO_CREATE_TOKEN }}
+
+      - name: Verify token is configured
+        run: |
+          if [ -z "${GH_TOKEN}" ]; then
+            echo "::error::REPO_CREATE_TOKEN secret is not set. Add it in Settings > Secrets and variables > Actions."
+            exit 1
+          fi
+          gh auth status
+
+      - name: Publish each pending project to its own new repo
+        run: |
+          set -euo pipefail
+          shopt -s nullglob dotglob
+          found_any=0
+
+          for dir in pending/*/; do
+            slug=$(basename "$dir")
+            [ "$slug" = ".gitkeep" ] && continue
+            found_any=1
+            repo_name="$slug"
+
+            echo "::group::Publishing $OWNER/$repo_name"
+
+            if gh repo view "$OWNER/$repo_name" >/dev/null 2>&1; then
+              echo "Repo $OWNER/$repo_name already exists — skipping creation, will still sync content."
+            else
+              gh repo create "$OWNER/$repo_name" --public \
+                --description "Autonomously generated project: $slug" \
+                --disable-wiki
+            fi
+
+            tmpdir=$(mktemp -d)
+            cp -r "${dir}." "$tmpdir/"
+            pushd "$tmpdir" >/dev/null
+
+            git init -q -b main
+            git config user.name "daily-project-bot"
+            git config user.email "actions@users.noreply.github.com"
+            git add -A
+            git commit -q -m "Initial commit: ${slug}"
+            git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${OWNER}/${repo_name}.git"
+            git push -q -f -u origin main
+
+            popd >/dev/null
+            rm -rf "$tmpdir"
+
+            git rm -rq "$dir"
+            echo "::endgroup::"
+          done
+
+          if [ "$found_any" -eq 0 ]; then
+            echo "No pending projects found — nothing to publish."
+          fi
+
+      - name: Commit cleanup of published pending folders
+        run: |
+          git config user.name "daily-project-bot"
+          git config user.email "actions@users.noreply.github.com"
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: clear published pending projects [skip ci]"
+            git push
+          else
+            echo "Nothing to clean up."
+          fi
