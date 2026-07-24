@@ -1,0 +1,75 @@
+name: Rename published repos
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'rename-requests.json'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  rename:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.REPO_CREATE_TOKEN }}
+      OWNER: manyu-lnmiit
+    steps:
+      - name: Checkout control repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.REPO_CREATE_TOKEN }}
+
+      - name: Verify token is configured
+        run: |
+          if [ -z "${GH_TOKEN}" ]; then
+            echo "::error::REPO_CREATE_TOKEN secret is not set."
+            exit 1
+          fi
+          gh auth status
+
+      - name: Process rename requests
+        run: |
+          set -euo pipefail
+          if [ ! -f rename-requests.json ]; then
+            echo "No rename-requests.json found — nothing to do."
+            exit 0
+          fi
+
+          count=$(jq 'length' rename-requests.json)
+          echo "Found $count rename request(s)."
+
+          for i in $(seq 0 $((count - 1))); do
+            old=$(jq -r ".[$i].old" rename-requests.json)
+            new=$(jq -r ".[$i].new" rename-requests.json)
+            echo "::group::Renaming $OWNER/$old -> $new"
+
+            if ! gh repo view "$OWNER/$old" >/dev/null 2>&1; then
+              echo "Source repo $OWNER/$old does not exist — skipping."
+              echo "::endgroup::"
+              continue
+            fi
+
+            if gh repo view "$OWNER/$new" >/dev/null 2>&1; then
+              echo "Target name $OWNER/$new already exists — skipping to avoid collision."
+              echo "::endgroup::"
+              continue
+            fi
+
+            gh repo rename "$new" --repo "$OWNER/$old" --yes
+            echo "::endgroup::"
+          done
+
+      - name: Clear processed rename requests
+        run: |
+          git config user.name "daily-project-bot"
+          git config user.email "actions@users.noreply.github.com"
+          rm -f rename-requests.json
+          if ! git diff --cached --quiet || [ -n "$(git status --porcelain)" ]; then
+            git add -A
+            git commit -m "chore: clear processed rename requests [skip ci]" || true
+            git push || true
+          fi
