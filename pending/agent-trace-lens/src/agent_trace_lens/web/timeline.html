@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>agent-trace-lens :: {{TRACE_ID}}</title>
+<style>
+  :root { color-scheme: dark; }
+  body { font-family: -apple-system, Segoe UI, Roboto, sans-serif; background: #0f1117; color: #e6e6e6; margin: 0; padding: 24px; }
+  h1 { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
+  .sub { color: #9aa0ac; font-size: 13px; margin-bottom: 20px; }
+  .row { display: flex; align-items: center; margin: 2px 0; height: 26px; }
+  .label { width: 260px; flex-shrink: 0; font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 12px; }
+  .track { position: relative; flex: 1; height: 18px; background: #1b1e27; border-radius: 3px; }
+  .bar { position: absolute; top: 0; height: 18px; border-radius: 3px; font-size: 10px; color: #0f1117; display: flex; align-items: center; padding-left: 4px; overflow: hidden; white-space: nowrap; }
+  .kind-agent { background: #7aa2f7; }
+  .kind-tool { background: #9ece6a; }
+  .kind-llm { background: #e0af68; }
+  .kind-chain { background: #bb9af7; }
+  .kind-custom { background: #7dcfff; }
+  .bar.error { background: #f7768e; }
+  .legend { margin-top: 24px; font-size: 12px; color: #9aa0ac; }
+  .legend span { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 4px; vertical-align: middle; }
+  .empty { color: #9aa0ac; font-size: 13px; margin-top: 40px; }
+</style>
+</head>
+<body>
+  <h1>Trace: {{TRACE_ID}}</h1>
+  <div class="sub" id="subtitle"></div>
+  <div id="chart"></div>
+  <div class="legend">
+    <span class="kind-agent"></span>agent&nbsp;&nbsp;
+    <span class="kind-tool"></span>tool&nbsp;&nbsp;
+    <span class="kind-llm"></span>llm&nbsp;&nbsp;
+    <span class="kind-chain"></span>chain&nbsp;&nbsp;
+    <span class="kind-custom"></span>custom&nbsp;&nbsp;
+    <span class="bar error" style="display:inline-block"></span>error
+  </div>
+
+<script>
+const spans = {{SPANS_JSON}};
+
+const chart = document.getElementById("chart");
+const subtitle = document.getElementById("subtitle");
+
+if (!spans.length) {
+  chart.innerHTML = '<div class="empty">No spans recorded for this trace yet.</div>';
+} else {
+  const minStart = Math.min(...spans.map(s => s.start_time));
+  const maxEnd = Math.max(...spans.map(s => s.end_time || s.start_time));
+  const totalMs = Math.max((maxEnd - minStart) * 1000, 1);
+
+  subtitle.textContent = `${spans.length} spans · ${totalMs.toFixed(1)} ms total`;
+
+  for (const s of spans) {
+    const row = document.createElement("div");
+    row.className = "row";
+
+    const label = document.createElement("div");
+    label.className = "label";
+    label.textContent = `${"  ".repeat(s.depth || 0)}${s.name}`;
+    label.title = s.name;
+
+    const track = document.createElement("div");
+    track.className = "track";
+
+    const startPct = ((s.start_time - minStart) * 1000 / totalMs) * 100;
+    const endTime = s.end_time || s.start_time;
+    const widthPct = Math.max(((endTime - s.start_time) * 1000 / totalMs) * 100, 0.5);
+
+    const bar = document.createElement("div");
+    bar.className = `bar kind-${s.kind}` + (s.status === "error" ? " error" : "");
+    bar.style.left = startPct + "%";
+    bar.style.width = widthPct + "%";
+    const dur = s.end_time ? ((s.end_time - s.start_time) * 1000).toFixed(1) + "ms" : "running";
+    bar.textContent = dur;
+    bar.title = `${s.name} (${s.kind}) — ${dur}${s.error ? " — " + s.error : ""}`;
+
+    track.appendChild(bar);
+    row.appendChild(label);
+    row.appendChild(track);
+    chart.appendChild(row);
+  }
+}
+</script>
+</body>
+</html>
