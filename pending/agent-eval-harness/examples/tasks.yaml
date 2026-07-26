@@ -1,0 +1,31 @@
+name: quickstart-suite
+description: A minimal example suite demonstrating each built-in scorer type.
+tasks:
+  - id: greeting-exact
+    prompt: "Say hello"
+    scorer: exact_match
+    expected: "Say hello"
+    tags: [basic]
+
+  - id: contains-keyword
+    prompt: "Name a primary color"
+    scorer: contains
+    expected: ["red", "blue", "yellow"]
+    scorer_kwargs:
+      case_sensitive: false
+    tags: [basic]
+
+  - id: regex-format
+    prompt: "2024-01-01"
+    scorer: regex
+    expected: "^\\d{4}-\\d{2}-\\d{2}$"
+    tags: [format]
+
+  - id: numeric-approx
+    prompt: "42"
+    scorer: numeric_tolerance
+    expected: 42
+    scorer_kwargs:
+      abs_tol: 0.5
+    tags: [math]
+    weight: 2.0
