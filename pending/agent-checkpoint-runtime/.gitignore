@@ -1,0 +1,37 @@
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# virtual envs
+.venv/
+venv/
+env/
+
+# testing / coverage
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+
+# agentflow local databases
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# env files
+.env
+
+# editors / OS
+.vscode/
+.idea/
+.DS_Store
