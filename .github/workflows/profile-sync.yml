@@ -1,0 +1,81 @@
+name: Sync profile README index
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'history.json'
+      - '.profile-sync-trigger'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.REPO_CREATE_TOKEN }}
+      OWNER: manyu-lnmiit
+      PROFILE_REPO: manyu-lnmiit
+    steps:
+      - name: Checkout control repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.REPO_CREATE_TOKEN }}
+
+      - name: Verify token is configured
+        run: |
+          if [ -z "${GH_TOKEN}" ]; then
+            echo "::error::REPO_CREATE_TOKEN secret is not set."
+            exit 1
+          fi
+          gh auth status
+
+      - name: Ensure profile repo exists
+        run: |
+          if ! gh repo view "$OWNER/$PROFILE_REPO" >/dev/null 2>&1; then
+            gh repo create "$OWNER/$PROFILE_REPO" --public \
+              --description "Abhimanyu Sharma — AI-focused software engineer. Index of daily-shipped projects below." \
+              --disable-wiki
+          fi
+
+      - name: Generate profile README from history.json
+        run: |
+          set -euo pipefail
+          {
+            echo "### Hi, I'm Abhimanyu 👋"
+            echo
+            echo "Senior/staff software engineer focused on agentic AI, LLM orchestration, and developer tooling for AI systems."
+            echo
+            echo "I run a self-directed daily build pipeline: each entry below is a complete, tested, CI-covered project — not a snippet or a stub."
+            echo
+            echo "| Date | Project | Description |"
+            echo "|------|---------|-------------|"
+            jq -r '
+              sort_by(.date) | reverse | .[] |
+              "| " + .date + " | [" + .title + "](https://github.com/'"$OWNER"'/" + .slug + ") | " + .description + " |"
+            ' history.json
+            echo
+            echo "---"
+            echo
+            echo "_This index regenerates automatically as new projects ship._"
+          } > profile_readme.md
+
+      - name: Push README to profile repo
+        run: |
+          set -euo pipefail
+          tmpdir=$(mktemp -d)
+          git clone "https://x-access-token:${GH_TOKEN}@github.com/${OWNER}/${PROFILE_REPO}.git" "$tmpdir"
+          cp profile_readme.md "$tmpdir/README.md"
+          cd "$tmpdir"
+          git config user.name "daily-project-bot"
+          git config user.email "actions@users.noreply.github.com"
+          if [ -n "$(git status --porcelain)" ]; then
+            git add README.md
+            git commit -m "chore: sync profile index"
+            git push
+          else
+            echo "Profile README already up to date."
+          fi

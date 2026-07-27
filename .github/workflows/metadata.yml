@@ -1,0 +1,73 @@
+name: Set repo description and topics
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'metadata-requests.json'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  metadata:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.REPO_CREATE_TOKEN }}
+      OWNER: manyu-lnmiit
+    steps:
+      - name: Checkout control repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.REPO_CREATE_TOKEN }}
+
+      - name: Verify token is configured
+        run: |
+          if [ -z "${GH_TOKEN}" ]; then
+            echo "::error::REPO_CREATE_TOKEN secret is not set."
+            exit 1
+          fi
+          gh auth status
+
+      - name: Apply description and topics
+        run: |
+          set -euo pipefail
+          if [ ! -f metadata-requests.json ]; then
+            echo "No metadata-requests.json found — nothing to do."
+            exit 0
+          fi
+
+          count=$(jq 'length' metadata-requests.json)
+          echo "Found $count metadata request(s)."
+
+          for i in $(seq 0 $((count - 1))); do
+            repo=$(jq -r ".[$i].repo" metadata-requests.json)
+            desc=$(jq -r ".[$i].description" metadata-requests.json)
+            topics=$(jq -r ".[$i].topics | join(\",\")" metadata-requests.json)
+            echo "::group::$OWNER/$repo"
+
+            if ! gh repo view "$OWNER/$repo" >/dev/null 2>&1; then
+              echo "Repo $OWNER/$repo does not exist — skipping."
+              echo "::endgroup::"
+              continue
+            fi
+
+            gh repo edit "$OWNER/$repo" --description "$desc" --homepage "https://github.com/$OWNER/$repo"
+            if [ -n "$topics" ]; then
+              gh repo edit "$OWNER/$repo" --add-topic "$topics"
+            fi
+            echo "::endgroup::"
+          done
+
+      - name: Clear processed metadata requests
+        run: |
+          git config user.name "daily-project-bot"
+          git config user.email "actions@users.noreply.github.com"
+          rm -f metadata-requests.json
+          if [ -n "$(git status --porcelain)" ]; then
+            git add -A
+            git commit -m "chore: clear processed metadata requests [skip ci]" || true
+            git push || true
+          fi
