@@ -1,0 +1,15 @@
+[
+  {
+    "repo": "llm-semantic-cache",
+    "description": "Semantic caching layer for LLM & agent tool calls — matches near-duplicate prompts by embedding similarity to cut redundant API spend and latency.",
+    "topics": [
+      "agentic-ai",
+      "llm",
+      "ai-agents",
+      "semantic-cache",
+      "caching",
+      "cost-optimization",
+      "python"
+    ]
+  }
+]

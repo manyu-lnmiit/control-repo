@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "llm-semantic-cache"
+version = "0.1.0"
+description = "Semantic caching layer for LLM and agent tool calls — cut redundant API spend by matching near-duplicate prompts instead of exact strings."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Abhimanyu" }]
+keywords = ["llm", "agents", "caching", "semantic-cache", "ai-agents", "cost-optimization"]
+dependencies = [
+    "click>=8.1.7,<9.0",
+]
+
+[project.optional-dependencies]
+openai = ["openai>=1.30.0,<2.0"]
+dev = [
+    "pytest>=8.0.0,<9.0",
+    "pytest-cov>=5.0.0,<6.0",
+    "ruff>=0.5.0,<1.0",
+]
+
+[project.scripts]
+semcache = "semantic_cache.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+ignore = ["PYI034"]
