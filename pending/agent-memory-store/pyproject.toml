@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agent-memory-store"
+version = "0.1.0"
+description = "A dependency-free long-term memory layer for LLM agents: episodic + semantic memory, importance-weighted retrieval, decay, and consolidation."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Abhimanyu" }]
+keywords = ["agentic-ai", "llm", "ai-agents", "memory", "rag", "agent-tooling"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = []
+
+[project.optional-dependencies]
+server = ["fastapi>=0.110,<1.0", "uvicorn[standard]>=0.29,<1.0"]
+dev = ["pytest>=8.0,<9.0", "pytest-cov>=5.0,<6.0", "ruff>=0.4,<1.0"]
+
+[project.scripts]
+agent-memory-store = "agent_memory_store.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+# PYI034: typing.Self requires Python 3.11+; this project targets 3.10.
+ignore = ["PYI034"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,0 +1,15 @@
+[
+  {
+    "repo": "agent-memory-store",
+    "description": "Dependency-free episodic + semantic long-term memory for LLM agents: importance-weighted retrieval, decay, and consolidation.",
+    "topics": [
+      "agentic-ai",
+      "llm",
+      "ai-agents",
+      "agent-memory",
+      "long-term-memory",
+      "rag",
+      "agent-tooling"
+    ]
+  }
+]
