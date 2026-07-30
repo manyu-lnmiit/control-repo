@@ -34,5 +34,11 @@
     "slug": "agent-memory-store",
     "title": "agent-memory-store: Long-Term Memory Layer for LLM Agents",
     "description": "A dependency-free episodic + semantic memory store for LLM agents with importance-weighted retrieval, decayed-importance forgetting, similarity clustering, and extractive consolidation into distilled semantic memories, plus a CLI and optional FastAPI HTTP API."
+  },
+  {
+    "date": "2026-07-30",
+    "slug": "prompt-registry",
+    "title": "prompt-registry: Git-Like Version Control & Safe Rollout for LLM Prompt Templates",
+    "description": "A dependency-free SQLite-backed registry for LLM prompt templates with immutable commit history, unified diffs, environment tags, one-call rollback, deterministic A/B routing between versions, a CLI, and an optional FastAPI HTTP service."
   }
 ]

@@ -1,0 +1,12 @@
+# Core library (prompt_registry.store, .template, .ab, .cli) has zero
+# third-party dependencies. Install extras below only if you need them.
+#
+# API service (prompt_registry.api):
+#   fastapi>=0.110,<1.0
+#   uvicorn[standard]>=0.29,<1.0
+#   pydantic>=2.5,<3.0
+#
+# Development / testing:
+#   pytest>=8.0,<9.0
+#   pytest-cov>=5.0,<6.0
+#   ruff>=0.5,<1.0

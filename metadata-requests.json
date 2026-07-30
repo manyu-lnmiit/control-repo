@@ -1,0 +1,15 @@
+[
+  {
+    "repo": "prompt-registry",
+    "description": "Git-like version control, diffing, tagging, and safe A/B rollout for LLM prompt templates.",
+    "topics": [
+      "agentic-ai",
+      "llm",
+      "prompt-engineering",
+      "prompt-management",
+      "developer-tools",
+      "python",
+      "fastapi"
+    ]
+  }
+]
