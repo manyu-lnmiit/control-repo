@@ -40,5 +40,11 @@
     "slug": "prompt-registry",
     "title": "prompt-registry: Git-Like Version Control & Safe Rollout for LLM Prompt Templates",
     "description": "A dependency-free SQLite-backed registry for LLM prompt templates with immutable commit history, unified diffs, environment tags, one-call rollback, deterministic A/B routing between versions, a CLI, and an optional FastAPI HTTP service."
+  },
+  {
+    "date": "2026-07-31",
+    "slug": "agent-code-sandbox",
+    "title": "agent-code-sandbox: Secure Sandboxed Execution Engine for LLM Agent-Generated Code",
+    "description": "A dependency-light secure execution sandbox for running LLM/agent-generated Python and shell snippets with CPU/memory/time limits, filesystem allowlisting, best-effort network isolation, structured result capture, and a JSONL audit trail, plus a CLI and optional FastAPI HTTP service."
   }
 ]

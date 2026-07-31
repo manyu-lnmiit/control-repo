@@ -1,0 +1,15 @@
+[
+  {
+    "repo": "agent-code-sandbox",
+    "description": "Secure sandboxed execution engine for running LLM/agent-generated Python and shell code with resource limits, filesystem/network policy, and an audit trail.",
+    "topics": [
+      "agentic-ai",
+      "llm",
+      "ai-agents",
+      "sandboxing",
+      "code-execution",
+      "developer-tools",
+      "python"
+    ]
+  }
+]
