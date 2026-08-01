@@ -46,5 +46,11 @@
     "slug": "agent-code-sandbox",
     "title": "agent-code-sandbox: Secure Sandboxed Execution Engine for LLM Agent-Generated Code",
     "description": "A dependency-light secure execution sandbox for running LLM/agent-generated Python and shell snippets with CPU/memory/time limits, filesystem allowlisting, best-effort network isolation, structured result capture, and a JSONL audit trail, plus a CLI and optional FastAPI HTTP service."
+  },
+  {
+    "date": "2026-08-01",
+    "slug": "llm-gateway",
+    "title": "llm-gateway: Unified Multi-Provider LLM Gateway with Routing, Failover & Cost Tracking",
+    "description": "An OpenAI-compatible HTTP gateway and Python library that routes chat requests across multiple LLM providers by model/task rules, retries and fails over on errors, enforces per-key token-bucket rate limits and USD budgets, and tracks token/cost usage, with a CLI and FastAPI server."
   }
 ]

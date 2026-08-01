@@ -1,0 +1,34 @@
+# Example llm-gateway configuration.
+# Copy to config.yaml and point LLM_GATEWAY_CONFIG at it, or pass --config.
+#
+# No secrets live in this file: provider API keys are always resolved from
+# the environment variable named by `api_key_env` at request time.
+
+rate_limit:
+  requests_per_minute: 120
+  burst: 20
+
+budgets:
+  default: 5.0 # USD; omit a key to leave it unlimited
+
+providers:
+  - name: primary
+    type: mock
+    price_per_1k_prompt: 0.5
+    price_per_1k_completion: 1.5
+
+  - name: openai-gpt4o
+    type: openai
+    base_url: https://api.openai.com/v1
+    api_key_env: OPENAI_API_KEY
+    price_per_1k_prompt: 2.5
+    price_per_1k_completion: 10.0
+
+routes:
+  # Route anything starting with "gpt-" to the real OpenAI backend, with the
+  # local mock provider as a failover if OpenAI is rate-limited or down.
+  - model_prefix: "gpt-"
+    providers: [openai-gpt4o, primary]
+
+  # Everything else goes straight to the mock provider.
+  - providers: [primary]

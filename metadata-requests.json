@@ -1,0 +1,15 @@
+[
+  {
+    "repo": "llm-gateway",
+    "description": "Unified multi-provider LLM gateway with rule-based routing, automatic failover, per-key rate limiting, and cost tracking behind an OpenAI-compatible API.",
+    "topics": [
+      "agentic-ai",
+      "llm",
+      "llm-gateway",
+      "api-gateway",
+      "fastapi",
+      "rate-limiting",
+      "openai-api"
+    ]
+  }
+]
