@@ -52,5 +52,11 @@
     "slug": "llm-gateway",
     "title": "llm-gateway: Unified Multi-Provider LLM Gateway with Routing, Failover & Cost Tracking",
     "description": "An OpenAI-compatible HTTP gateway and Python library that routes chat requests across multiple LLM providers by model/task rules, retries and fails over on errors, enforces per-key token-bucket rate limits and USD budgets, and tracks token/cost usage, with a CLI and FastAPI server."
+  },
+  {
+    "date": "2026-08-02",
+    "slug": "context-compactor",
+    "title": "context-compactor: Token-Budget-Aware Context Window Compaction for LLM Agents",
+    "description": "A dependency-free library that fits growing LLM/agent transcripts into a fixed token budget by scoring message importance, always protecting pinned turns, and collapsing low-value runs into summaries instead of truncating, with a CLI and optional FastAPI HTTP service."
   }
 ]

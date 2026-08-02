@@ -1,0 +1,6 @@
+# Core library has zero runtime dependencies by design.
+# Install extras as needed:
+#   pip install -e ".[api]"     -> FastAPI HTTP service
+#   pip install -e ".[tiktoken]" -> accurate OpenAI-model token counts
+#   pip install -e ".[dev]"     -> test/lint/type-check tooling
+-e .[dev]
