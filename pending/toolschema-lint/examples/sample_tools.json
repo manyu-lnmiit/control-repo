@@ -1,0 +1,19 @@
+[
+  {
+    "type": "function",
+    "function": {
+      "name": "run",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "flag": { "type": "boolean" },
+          "mode": {
+            "type": "string",
+            "description": "Must be either 'fast' or 'slow'."
+          }
+        },
+        "required": ["flag"]
+      }
+    }
+  }
+]

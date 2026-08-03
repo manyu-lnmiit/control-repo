@@ -1,0 +1,69 @@
+[
+  {
+    "type": "function",
+    "function": {
+      "name": "run",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "flag": {
+            "type": "boolean"
+          },
+          "mode": {
+            "type": "string",
+            "description": "Must be either 'fast' or 'slow'."
+          },
+          "config": {
+            "type": "object"
+          }
+        },
+        "required": ["flag", "missing_param"]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "run2",
+      "description": "todo",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "level": {
+            "type": "string",
+            "enum": ["low", 2, "high"]
+          },
+          "count": {
+            "type": "banana"
+          }
+        }
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "get_weather_report",
+      "description": "Get the weather report for a city and return temperature and conditions",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "city": { "type": "string" }
+        }
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "fetch_weather_report",
+      "description": "Fetch the weather report for a city and return temperature and conditions",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "city": { "type": "string" }
+        }
+      }
+    }
+  }
+]

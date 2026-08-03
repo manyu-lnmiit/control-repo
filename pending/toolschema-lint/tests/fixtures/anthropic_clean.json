@@ -1,0 +1,16 @@
+[
+  {
+    "name": "lookup_order_status",
+    "description": "Look up the current shipping status of a customer order by its order id.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "order_id": {
+          "type": "string",
+          "description": "The unique order identifier, e.g. 'ORD-12345'."
+        }
+      },
+      "required": ["order_id"]
+    }
+  }
+]

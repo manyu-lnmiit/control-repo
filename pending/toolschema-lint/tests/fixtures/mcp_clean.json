@@ -1,0 +1,18 @@
+{
+  "tools": [
+    {
+      "name": "read_file",
+      "description": "Read the full contents of a text file at the given path within the workspace.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "Workspace-relative path to the file to read."
+          }
+        },
+        "required": ["path"]
+      }
+    }
+  ]
+}

@@ -58,5 +58,11 @@
     "slug": "context-compactor",
     "title": "context-compactor: Token-Budget-Aware Context Window Compaction for LLM Agents",
     "description": "A dependency-free library that fits growing LLM/agent transcripts into a fixed token budget by scoring message importance, always protecting pinned turns, and collapsing low-value runs into summaries instead of truncating, with a CLI and optional FastAPI HTTP service."
+  },
+  {
+    "date": "2026-08-03",
+    "slug": "toolschema-lint",
+    "title": "toolschema-lint: Static Analyzer for LLM Tool/Function-Calling Schemas",
+    "description": "A dependency-free static analyzer that lints OpenAI, Anthropic, and MCP tool/function-calling schemas for missing or thin descriptions, ambiguous naming, unconstrained enums, JSON-schema type mismatches, and near-duplicate tool definitions, with a CLI, text/JSON/SARIF reporting, and pluggable severity config."
   }
 ]

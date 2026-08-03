@@ -1,0 +1,15 @@
+[
+  {
+    "repo": "toolschema-lint",
+    "description": "Static analyzer for LLM tool/function-calling schemas (OpenAI, Anthropic, MCP) — catches missing descriptions, ambiguous naming, unconstrained enums, and near-duplicate tools.",
+    "topics": [
+      "agentic-ai",
+      "llm",
+      "ai-agents",
+      "tool-calling",
+      "function-calling",
+      "static-analysis",
+      "mcp"
+    ]
+  }
+]

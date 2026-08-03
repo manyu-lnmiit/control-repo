@@ -1,0 +1,49 @@
+[
+  {
+    "type": "function",
+    "function": {
+      "name": "get_current_weather",
+      "description": "Fetch the current weather conditions for a named city, returning temperature, conditions, and humidity.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "city": {
+            "type": "string",
+            "description": "The city name, e.g. 'San Francisco'."
+          },
+          "unit": {
+            "type": "string",
+            "description": "Temperature unit to return.",
+            "enum": ["celsius", "fahrenheit"]
+          }
+        },
+        "required": ["city"]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "search_flights",
+      "description": "Search for available flights between two airports on a given date, returning price and duration.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "origin": {
+            "type": "string",
+            "description": "IATA code of the departure airport, e.g. 'SFO'."
+          },
+          "destination": {
+            "type": "string",
+            "description": "IATA code of the arrival airport, e.g. 'JFK'."
+          },
+          "is_refundable": {
+            "type": "boolean",
+            "description": "Whether to only return refundable fares."
+          }
+        },
+        "required": ["origin", "destination"]
+      }
+    }
+  }
+]
