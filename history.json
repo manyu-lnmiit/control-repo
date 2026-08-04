@@ -64,5 +64,11 @@
     "slug": "toolschema-lint",
     "title": "toolschema-lint: Static Analyzer for LLM Tool/Function-Calling Schemas",
     "description": "A dependency-free static analyzer that lints OpenAI, Anthropic, and MCP tool/function-calling schemas for missing or thin descriptions, ambiguous naming, unconstrained enums, JSON-schema type mismatches, and near-duplicate tool definitions, with a CLI, text/JSON/SARIF reporting, and pluggable severity config."
+  },
+  {
+    "date": "2026-08-04",
+    "slug": "prompt-injection-radar",
+    "title": "injection-radar: Prompt-Injection Detection & Sanitization for Untrusted LLM Input",
+    "description": "A dependency-free heuristic scanner that detects instruction-override phrasing, spoofed chat delimiters, encoding-based obfuscation, and data-exfiltration links in tool outputs, RAG documents, and web content, then redacts or quarantines the risky spans, with a CLI and optional FastAPI sidecar."
   }
 ]

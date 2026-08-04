@@ -1,0 +1,15 @@
+[
+  {
+    "repo": "prompt-injection-radar",
+    "description": "Heuristic scanner that detects and sanitizes prompt-injection attempts (instruction overrides, spoofed delimiters, encoding tricks, exfil links) in untrusted LLM input.",
+    "topics": [
+      "agentic-ai",
+      "llm",
+      "ai-agents",
+      "prompt-injection",
+      "llm-security",
+      "rag",
+      "developer-tools"
+    ]
+  }
+]
