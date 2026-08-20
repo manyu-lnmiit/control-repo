@@ -70,5 +70,11 @@
     "slug": "prompt-injection-radar",
     "title": "injection-radar: Prompt-Injection Detection & Sanitization for Untrusted LLM Input",
     "description": "A dependency-free heuristic scanner that detects instruction-override phrasing, spoofed chat delimiters, encoding-based obfuscation, and data-exfiltration links in tool outputs, RAG documents, and web content, then redacts or quarantines the risky spans, with a CLI and optional FastAPI sidecar."
+  },
+  {
+    "date": "2026-08-20",
+    "slug": "llm-output-contract",
+    "title": "llm-output-contract: Schema-Enforced Structured Output Parsing for LLMs",
+    "description": "Extract, repair, coerce and validate messy LLM text into schema-valid structured data, with a self-healing retry loop."
   }
 ]

@@ -1,0 +1,15 @@
+[
+  {
+    "repo": "llm-output-contract",
+    "description": "Extract, repair, coerce and validate messy LLM output into schema-valid structured data, with a self-healing retry loop.",
+    "topics": [
+      "agentic-ai",
+      "llm",
+      "structured-output",
+      "json-schema",
+      "function-calling",
+      "llm-tooling",
+      "pydantic"
+    ]
+  }
+]

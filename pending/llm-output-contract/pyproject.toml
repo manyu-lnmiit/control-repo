@@ -1,0 +1,67 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "llm-output-contract"
+version = "0.1.0"
+description = "Turn messy LLM text into schema-valid structured data via extract, repair, coerce and validate."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "Abhimanyu" }]
+keywords = [
+    "llm",
+    "agentic-ai",
+    "json-schema",
+    "structured-output",
+    "function-calling",
+    "validation",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Typing :: Typed",
+]
+dependencies = [
+    "jsonschema>=4.18,<5",
+]
+
+[project.optional-dependencies]
+pydantic = ["pydantic>=2.0,<3"]
+dev = [
+    "pytest>=7.4,<9",
+    "pytest-cov>=4.1,<6",
+    "ruff>=0.4,<1",
+    "pydantic>=2.0,<3",
+]
+
+[project.urls]
+Homepage = "https://github.com/manyu-lnmiit/llm-output-contract"
+Repository = "https://github.com/manyu-lnmiit/llm-output-contract"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+outputcontract = ["py.typed"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 110
+target-version = "py39"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+ignore = ["B008"]
