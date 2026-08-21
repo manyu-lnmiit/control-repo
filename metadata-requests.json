@@ -1,0 +1,15 @@
+[
+  {
+    "repo": "agent-workflow-graph",
+    "description": "Composable DAG orchestration engine for multi-agent LLM workflows: conditional loops, parallel fan-out/fan-in, per-node retries, and a Mermaid export. Zero required dependencies.",
+    "topics": [
+      "agentic-ai",
+      "llm",
+      "ai-agents",
+      "multi-agent-systems",
+      "workflow-orchestration",
+      "dag",
+      "python"
+    ]
+  }
+]

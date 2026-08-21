@@ -76,5 +76,11 @@
     "slug": "llm-output-contract",
     "title": "llm-output-contract: Schema-Enforced Structured Output Parsing for LLMs",
     "description": "Extract, repair, coerce and validate messy LLM text into schema-valid structured data, with a self-healing retry loop."
+  },
+  {
+    "date": "2026-08-21",
+    "slug": "agent-workflow-graph",
+    "title": "agent-workflow-graph: Composable DAG Orchestration Engine for Multi-Agent LLM Workflows",
+    "description": "A dependency-free Python engine for composing multi-agent LLM workflows as directed graphs, with conditional edges for agentic loops, parallel fan-out/fan-in, per-node retries, a level-synchronous executor, and a Mermaid diagram export, plus a CLI."
   }
 ]

@@ -1,0 +1,6 @@
+# Core library has zero runtime dependencies (stdlib only).
+# Install dev/test tooling with: pip install -e ".[dev]"
+pytest>=8.0,<9
+pytest-cov>=5.0,<6
+ruff>=0.5,<0.6
+mypy>=1.10,<2
